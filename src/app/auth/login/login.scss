@@ -1,0 +1,20 @@
+main,section,mat-card,form{
+    padding: 2vh;
+}
+
+section{
+    justify-content: center;
+}
+
+mat-card-content{
+    text-align: center;
+}
+
+mat-form-field{
+    padding: 2vh;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
