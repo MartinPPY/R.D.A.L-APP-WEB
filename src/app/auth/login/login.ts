@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [GeneralModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -20,25 +20,16 @@ export class Login {
     email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(100)]],
     password: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]]
   })
-  private dialog = inject(MatDialog)
   cargando: boolean = false
+  error: boolean = false
   private authService: Auth = inject(Auth)
   private router = inject(Router)
-
-  mostrarAlerta(titulo: string, mensaje: string) {
-    this.dialog.open(Alerts, {
-      data: {
-        titulo: titulo,
-        mensaje: mensaje
-      }
-    })
-  }
 
   logIn() {
 
     this.cargando = true
     if (this.loginForm.invalid) {
-      this.mostrarAlerta('Error!', 'Revisa tus credenciales de acceso')
+      this.error = true
       this.cargando = false
       return
     }
@@ -54,13 +45,14 @@ export class Login {
 
         this.authService.verifyUser().subscribe({
           next: (response: { usuario: Payload }) => {
-            if(response.usuario.tipoUsuario === 1){
+            if (response.usuario.tipoUsuario === 1) {
               this.router.navigate(['administrador'])
-            }else{
+            } else {
               this.router.navigate(['alumno/registro-solicitud'])
             }
           },
           error: (err) => {
+            this.error = true
             console.error(err)
           }
         })
@@ -69,6 +61,7 @@ export class Login {
       },
       error: (err) => {
         console.error(err)
+        this.error = true
         this.cargando = false
       }
 
@@ -80,6 +73,10 @@ export class Login {
       return true
     }
     return false
+  }
+
+  ocultarMsg(){
+    this.error = false
   }
 
 
