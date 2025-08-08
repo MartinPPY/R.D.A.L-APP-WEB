@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { GeneralModule } from '../../modules/general/general-module';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Alerts } from '../../components/alerts/alerts';
+import { LoginRequest } from '../models/interfaces';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +15,13 @@ import { Alerts } from '../../components/alerts/alerts';
 export class Login {
 
   private formBuilder: FormBuilder = inject(FormBuilder)
-  loginForm = this.formBuilder.group({
+  loginForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(100)]],
     password: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]]
   })
-  dialog = inject(MatDialog)
+  private dialog = inject(MatDialog)
   cargando: boolean = false
+  private authService: Auth = inject(Auth)
 
   mostrarAlerta(titulo: string, mensaje: string) {
     this.dialog.open(Alerts, {
@@ -29,28 +32,48 @@ export class Login {
     })
   }
 
-  validarCampos(): boolean {
-
-    if (this.loginForm.get('email')?.hasError) {
-      this.mostrarAlerta('Ha ocurrido un error!', 'El email es invalido!')
-      return false
-    }
-
-    if (this.loginForm.get('email')?.hasError) {
-      this.mostrarAlerta('Ha ocurrido un error!', 'La contraseña es invalida!')
-      return false
-    }
-
-    return true
-  }
-
   logIn() {
-    this.cargando= true
-    if (!this.validarCampos()) {
-      this.cargando= false
+
+    this.cargando = true
+    if (this.loginForm.invalid) {
+      this.mostrarAlerta('Error!', 'Revisa tus credenciales de acceso')
+      this.cargando = false
       return
     }
-    this.cargando= false
+
+    const body: LoginRequest = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
+    }
+
+    this.authService.login(body).subscribe({
+
+      next: (response: any) => {
+
+        this.authService.verifyUser().subscribe({
+          next: (response) => {
+            console.log(response)
+          },
+          error: (err) => {
+            console.error(err)
+          }
+        })
+        this.cargando = false
+        
+      },
+      error: (err) => {
+        console.error(err)
+        this.cargando = false
+      }
+
+    })
+  }
+
+  hasError(campo: string, error: string): boolean {
+    if (this.loginForm.get(campo)?.hasError(error)) {
+      return true
+    }
+    return false
   }
 
 

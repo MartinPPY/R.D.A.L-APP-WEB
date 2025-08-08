@@ -10,11 +10,15 @@ mat-card-content{
     text-align: center;
 }
 
-mat-form-field{
+mat-form-field,fieldset{
     padding: 2vh;
 }
 
 form{
     display: flex;
     flex-direction: column;
+    fieldset{
+        display: flex;
+        flex-direction: column;
+    }
 }

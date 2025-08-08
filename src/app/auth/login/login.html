@@ -2,26 +2,42 @@
     <section class="row">
         <mat-card class="col-lg-6">
             <mat-card-content>
+
                 <mat-card-title>Inicio de sesión</mat-card-title>
                 <mat-card-subtitle>Ingresa con tus credenciales para acceder</mat-card-subtitle>
+
                 <form [formGroup]="loginForm" (ngSubmit)="logIn()">
                     <mat-form-field>
                         <mat-label>Correo electronico</mat-label>
                         <input matInput placeholder="Ingresa tu correo electronico" formControlName="email">
                         <mat-hint align="start">Debe ser tu correo institucional</mat-hint>
+                        @if (hasError('email','required')) {
+                        <mat-error>Correo electronico es requerido!</mat-error>
+                        }
+                        @if (hasError('email','email')) {
+                        <mat-error>Correo electronico no es valido!</mat-error>
+                        }
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Contraseña</mat-label>
                         <input matInput placeholder="Ingersa tu contraseña" formControlName="password">
                         <mat-hint align="start">Debe ser tu contraseña de usuario</mat-hint>
+                        @if (hasError('password','required')) {
+                        <mat-error>Contraseña es requerida!</mat-error>
+                        }
                     </mat-form-field>
+
                     @if (!cargando) {
-                    <button matButton="filled" type="submit">Iniciar sesión</button>
+                    <fieldset>
+                        <button matButton="filled" type="submit">Iniciar sesión</button>
+                    </fieldset>
                     }@else {
-                        cargando....
+                    cargando....
                     }
                 </form>
+
                 <a href="">¿Olvidaste tu contraseña?</a>
+
             </mat-card-content>
 
         </mat-card>
