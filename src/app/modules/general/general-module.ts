@@ -7,7 +7,9 @@ import {  MatCardModule } from '@angular/material/card';
 import {MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTimepickerModule} from '@angular/material/timepicker';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -20,7 +22,11 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatGridListModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatTimepickerModule,
+    MatSelectModule
+    
 
   ],
   exports: [
@@ -30,7 +36,10 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatGridListModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatTimepickerModule,
+    MatSelectModule
   ]
 })
 export class GeneralModule { }

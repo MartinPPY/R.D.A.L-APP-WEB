@@ -1,0 +1,13 @@
+main,section,article{
+    padding: 2vh;
+}
+mat-card{
+    text-align: center;
+    mat-card-content{
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+        }
+    }
+}

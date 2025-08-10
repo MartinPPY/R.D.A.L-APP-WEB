@@ -1,15 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { GeneralModule } from '../../modules/general/general-module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Alerts } from '../../components/alerts/alerts';
-import { LoginRequest, Payload } from '../models/interfaces';
+import { LoginRequest, LoginResponse, Payload } from '../models/interfaces';
 import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, GeneralModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -21,15 +21,18 @@ export class Login {
     password: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]]
   })
   cargando: boolean = false
-  error: boolean = false
   private authService: Auth = inject(Auth)
   private router = inject(Router)
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
+  }
 
   logIn() {
 
     this.cargando = true
     if (this.loginForm.invalid) {
-      this.error = true
       this.cargando = false
       return
     }
@@ -41,8 +44,8 @@ export class Login {
 
     this.authService.login(body).subscribe({
 
-      next: (response: any) => {
-
+      next: (response: LoginResponse) => {
+        localStorage.setItem('areasTrabajo', JSON.stringify(response.areasTrabajo))
         this.authService.verifyUser().subscribe({
           next: (response: { usuario: Payload }) => {
             if (response.usuario.tipoUsuario === 1) {
@@ -52,7 +55,6 @@ export class Login {
             }
           },
           error: (err) => {
-            this.error = true
             console.error(err)
           }
         })
@@ -61,7 +63,6 @@ export class Login {
       },
       error: (err) => {
         console.error(err)
-        this.error = true
         this.cargando = false
       }
 
@@ -69,14 +70,10 @@ export class Login {
   }
 
   hasError(campo: string, error: string): boolean {
-    if (this.loginForm.get(campo)?.hasError(error)) {
+    if (this.loginForm.get(campo)?.hasError(error) && this.loginForm.get(campo)?.touched) {
       return true
     }
     return false
-  }
-
-  ocultarMsg(){
-    this.error = false
   }
 
 

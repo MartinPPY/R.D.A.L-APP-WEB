@@ -1,3 +1,23 @@
-section{
-    justify-content: center;
+main {
+    padding: 2vh;
+
+    section {
+        justify-content: center;
+        padding: 2vh;
+
+        article{
+            padding: 2vh;
+        }
+    }
+}
+
+mat-card-content{
+    text-align: center;
+
+    form{
+        margin-top: 2vh;
+        display: flex;
+        flex-direction: column;
+        gap: 2vh;
+    }
 }
