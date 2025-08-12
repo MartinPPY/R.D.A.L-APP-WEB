@@ -6,7 +6,7 @@
                     <mat-card-title>Registro de horas:</mat-card-title>
                     <mat-card-subtitle>Ingresa las horas segun los campos solicitantes</mat-card-subtitle>
                     <form [formGroup]="actividadForm" (ngSubmit)="registrarActividad()">
-                        <mat-form-field>
+                        <mat-form-field appearance="outline">
                             <mat-label>Choose a date</mat-label>
                             <input matInput [matDatepicker]="picker" formControlName="fecha">
                             <mat-hint>MM/DD/YYYY</mat-hint>
@@ -14,21 +14,21 @@
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
-                        <mat-form-field>
+                        <mat-form-field appearance="outline">
                             <mat-label>Pick a time</mat-label>
                             <input matInput [matTimepicker]="timePicker" formControlName="horaInicio">
                             <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
                             <mat-timepicker #timePicker />
                         </mat-form-field>
 
-                        <mat-form-field>
+                        <mat-form-field appearance="outline">
                             <mat-label>Pick a time</mat-label>
                             <input matInput [matTimepicker]="endTimePicker" formControlName="horaTermino">
                             <mat-timepicker-toggle matIconSuffix [for]="endTimePicker" />
                             <mat-timepicker #endTimePicker />
                         </mat-form-field>
 
-                        <mat-form-field>
+                        <mat-form-field appearance="outline">
                             <mat-label>Area de trabajo</mat-label>
                             <mat-select formControlName="areaTrabajo">
                                 @for (item of areasTrabajo; track $index) {

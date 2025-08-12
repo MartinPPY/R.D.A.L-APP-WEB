@@ -1,52 +1,44 @@
 <main class="container-fluid">
     <section class="row">
-        <article class="col-lg-6">
-            <mat-card appearance="outlined">
-                <mat-card-content>
-                    <mat-card-title>
-                        <h4>Inicio de sesión</h4>
-                    </mat-card-title>
-                    <mat-card-subtitle>
-                        Ingresa con tus credenciales para acceder
-                    </mat-card-subtitle>
+        <article class="col-lg-6 card">
+            <h3>Inicio de sesión</h3>
+            <p>Ingresa con tus credenciales para acceder</p>
+            <form [formGroup]="loginForm" (ngSubmit)="logIn()">
 
-                    <form [formGroup]="loginForm" (ngSubmit)="logIn()">
-                        <mat-form-field>
-                            <mat-label>Correo electronico:</mat-label>
-                            <input matInput placeholder="user@duoc.cl" formControlName="email">
-                            <mat-hint>
-                                Debe ser tu correo institucional (duoc.cl - duocuc.cl)
-                            </mat-hint>
-                            @if (hasError('email','required')) {
-                            <mat-error>El correo debe ser obligatorio!</mat-error>
-                            }
-                            @if (hasError('email','email')) {
-                            <mat-error>El correo no es valido!</mat-error>
-                            }
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electronico</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                        formControlName="email">
+                    <div id="emailHelp" class="form-text">Debe ser tu correo institucional (@duoc.cl - @duocuc.cl)</div>
+                    @if (hasError('email','required')) {
+                    <div class="text-danger">
+                        Correo requerido!
+                    </div>
+                    }
+                    @if (hasError('email','email')) {
+                    <div class="invalid-feedback">
+                        Formato no valido!
+                    </div>
+                    }
+                </div>
 
-                        </mat-form-field>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" aria-describedby="passwordHelp"
+                        formControlName="password">
+                    <div id="passwordHelp" class="form-text">Debe ser tu contraseña de usuario
+                    </div>
+                    @if (hasError('password','required')) {
+                    <div class="text-danger">La contraseña es obligatoria</div>
+                    }
+                </div>
 
-                        <mat-form-field>
-                            <mat-label>Contraseña:</mat-label>
-                            <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" />
-                            <button matIconButton matSuffix (click)="clickEvent($event)"
-                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
-                                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
-                            <mat-hint>
-                                Debe ser tu contraseña de usuario
-                            </mat-hint>
-                            @if (hasError('password','required')) {
-                            <mat-error>La contraseña es obligatoria</mat-error>
-                            }
-                        </mat-form-field>
+                <div class="login-options">
+                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                    <a href="">¿Olvidaste tu contraseña?</a>
+                </div>
 
-                        <button matButton="filled" type="submit">Iniciar sesión</button>
-                        <a href="">¿Olvidaste tu contraseña?</a>
-                    </form>
-
-                </mat-card-content>
-            </mat-card>
+            </form>
         </article>
     </section>
 </main>

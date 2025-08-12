@@ -1,23 +1,18 @@
-main {
+main,section,article{
     padding: 2vh;
-
-    section {
-        justify-content: center;
-        padding: 2vh;
-
-        article{
-            padding: 2vh;
-        }
-    }
 }
 
-mat-card-content{
-    text-align: center;
+section{
+    justify-content: center;
+}
 
-    form{
-        margin-top: 2vh;
-        display: flex;
-        flex-direction: column;
-        gap: 2vh;
-    }
+h3,p{
+    text-align: center;
+}
+
+.login-options{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 2vh;
 }

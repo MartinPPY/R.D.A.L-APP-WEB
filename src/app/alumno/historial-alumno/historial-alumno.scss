@@ -3,6 +3,7 @@ main,section,article{
 }
 
 mat-card{
+    padding: 2vh;
     text-align: center;
     mat-card-content{
         table{
@@ -15,4 +16,16 @@ mat-card{
     margin-top: 2vh;
     display: flex;
     gap: 2vh;
+    mat-form-field{
+        width: 100%;
+    }
+}
+
+#resumen-mensual{
+    margin: 2vh 0vh;
+    gap: 2vh;
+
+    mat-card{
+        padding: 0.5vh;        
+    }
 }

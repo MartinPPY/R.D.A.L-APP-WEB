@@ -20,22 +20,15 @@ export class AlumnoService {
     return this.http.get(`${ruta}alumno/actividades`, { withCredentials: true })
   }
 
-  filtrarActividades(mes: number | undefined, area: string | undefined): Observable<any> {
+  filtrarActividades(mes: number | boolean, area: string | boolean): Observable<any> {
     let params = new HttpParams()
-
-    if (!mes) {
-      params = params.set('mes', false)
-    } else {
-      params = params.set('mes', mes)
-    }
-
-    if (!area) {
-      params = params.set('area', false)
-    } else {
-      params = params.set('area', area)
-    }
-
+    .set('area',area)
+    .set('mes',mes)
     return this.http.get(`${ruta}alumno/actividades-filtradas`, { params, withCredentials: true })
+  }
+
+  traerResumenMensual():Observable<any>{
+    return this.http.get(`${ruta}alumno/resumen-mensual`, {withCredentials: true })
   }
 
 }

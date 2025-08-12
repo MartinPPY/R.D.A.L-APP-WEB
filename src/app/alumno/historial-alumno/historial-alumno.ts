@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../modules/general/general-module';
-import { Actividad } from '../models/interfaces';
+import { Actividad, ResumenMensual } from '../models/interfaces';
 import { AlumnoService } from '../../services/alumno.service';
 import { AreaTrabajo } from '../../models/interfaces';
 
@@ -18,11 +18,15 @@ export class HistorialAlumno implements OnInit {
   actividades: Actividad[] = []
   areasTrabajo: AreaTrabajo[] = JSON.parse(localStorage.getItem('areasTrabajo') || '')
   mes: string[] = this.obtenerMesesActuales()
-  mesFiltro: number | undefined = 0
-  areaFiltro: string | undefined = ''
+  mesFiltro: number | boolean = false
+  areaFiltro: string | boolean = false
+  horasAprobadas: number = 0
+  montoAcumulado: number | null = null
+  ordenCompra: number | string = ''
 
   ngOnInit(): void {
     this.obtenerActividades()
+    this.traerResumenMensual()
     console.log(this.mes)
   }
 
@@ -53,11 +57,10 @@ export class HistorialAlumno implements OnInit {
   };
 
   filtrarActividades() {
+
     this.alumnoService.filtrarActividades(this.mesFiltro, this.areaFiltro).subscribe({
       next: (response: { actividades: Actividad[] }) => {
-        console.log(response.actividades)
         this.actividades = response.actividades
-
       },
       error: (err) => {
         console.error(err)
@@ -65,17 +68,23 @@ export class HistorialAlumno implements OnInit {
     })
   }
 
-  asignarMes(mes: number | undefined) {
-    if (mes) {
-      this.mesFiltro = mes + 1
-    } else {
-      this.mesFiltro = mes
-    }
+  asignarMes(mes: number | boolean) {
+    this.mesFiltro = mes
 
   }
 
-  asignarArea(area: string | undefined) {
+  asignarArea(area: string | boolean) {
     this.areaFiltro = area
+  }
+
+  traerResumenMensual() {
+    this.alumnoService.traerResumenMensual().subscribe({
+      next: (response:ResumenMensual) => {
+        this.montoAcumulado = response.montoAcumulado
+        this.horasAprobadas = response.horasAprobadas.horas_trabajadas
+        this.ordenCompra = response.ordenCompra
+      }
+    })
   }
 
 

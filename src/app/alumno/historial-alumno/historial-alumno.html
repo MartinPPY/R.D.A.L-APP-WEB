@@ -2,27 +2,61 @@
     <section class="row">
         <article class="col-lg">
             <mat-card appearance="outlined">
+                <mat-card-title> Detalles del mes: </mat-card-title>
+
+                <div class="container-fluid">
+                    <div class="row" id="resumen-mensual">
+                        <mat-card class="col">
+                            <mat-card-content>
+                                <h6>Horas aprobadas: {{horasAprobadas}} </h6>
+                            </mat-card-content>
+                        </mat-card>
+
+                        <mat-card class="col">
+                            <mat-card-content>
+                                @if (!montoAcumulado) {
+                                <h6>Monto acumulado: 0</h6>
+                                }@else{
+                                <h6>Monto acumulado: {{montoAcumulado}}</h6>
+                                }
+                            </mat-card-content>
+                        </mat-card>
+
+                        <mat-card class="col">
+                            <mat-card-content>
+                                <h6>Orden de compra: {{ordenCompra}}</h6>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
                 <mat-card-content>
                     <mat-card-title>Historial de horas trabajadas y aprobadas:</mat-card-title>
                     <div class="filtros">
-                        <select class="form-select form-select-sm" aria-label="Small select example"
-                            (change)="filtrarActividades()">
-                            <option selected (click)="asignarArea(undefined)">Filtrar por área de
-                                trabajo</option>
-                            @for (item of areasTrabajo; track $index) {
-                            <option value="{{item.id}}" (click)="asignarArea(item.nombre);">
-                                {{item.nombre}}</option>
-                            }
-                        </select>
-                        <select class="form-select form-select-sm" aria-label="Small select example"
-                            (change)="filtrarActividades()">
-                            <option selected (click)="asignarMes(undefined);">Filtrar por mes
-                            </option>
-                            @for (item of mes; track $index) {
-                            <option value="{{$index}}" (click)="asignarMes($index + 1);">{{item}}
-                            </option>
-                            }
-                        </select>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Filtrar por áreas de trabajo</mat-label>
+                            <mat-select>
+                                <mat-option [value]="false"
+                                    (click)="asignarArea(false);filtrarActividades()">Todas</mat-option>
+                                @for (item of areasTrabajo; track $index) {
+                                <mat-option [value]="item.nombre"
+                                    (click)="asignarArea(item.nombre);filtrarActividades()">{{item.nombre}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Filtrar por mes</mat-label>
+                            <mat-select>
+                                <mat-option [value]="false"
+                                    (click)="asignarMes(false);filtrarActividades()">Todos</mat-option>
+                                @for (item of mes; track $index) {
+                                <mat-option [value]="item"
+                                    (click)="asignarMes($index + 1);filtrarActividades()">{{item}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                     <table class="table table-striped">
                         <thead>
@@ -44,13 +78,6 @@
                             }
                         </tbody>
                     </table>
-                </mat-card-content>
-            </mat-card>
-        </article>
-        <article class="col-lg">
-            <mat-card appearance="outlined">
-                <mat-card-content>
-                    <mat-card-title>Resumen del mes actual:</mat-card-title>
                 </mat-card-content>
             </mat-card>
         </article>
