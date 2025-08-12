@@ -1,3 +1,18 @@
 main,section,article{
     padding: 2vh;
 }
+
+mat-card{
+    text-align: center;
+    mat-card-content{
+        table{
+            margin-top: 2vh;
+        }
+    }
+}
+
+.filtros{
+    margin-top: 2vh;
+    display: flex;
+    gap: 2vh;
+}

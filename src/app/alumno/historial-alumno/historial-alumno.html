@@ -4,6 +4,46 @@
             <mat-card appearance="outlined">
                 <mat-card-content>
                     <mat-card-title>Historial de horas trabajadas y aprobadas:</mat-card-title>
+                    <div class="filtros">
+                        <select class="form-select form-select-sm" aria-label="Small select example"
+                            (change)="filtrarActividades()">
+                            <option selected (click)="asignarArea(undefined)">Filtrar por área de
+                                trabajo</option>
+                            @for (item of areasTrabajo; track $index) {
+                            <option value="{{item.id}}" (click)="asignarArea(item.nombre);">
+                                {{item.nombre}}</option>
+                            }
+                        </select>
+                        <select class="form-select form-select-sm" aria-label="Small select example"
+                            (change)="filtrarActividades()">
+                            <option selected (click)="asignarMes(undefined);">Filtrar por mes
+                            </option>
+                            @for (item of mes; track $index) {
+                            <option value="{{$index}}" (click)="asignarMes($index + 1);">{{item}}
+                            </option>
+                            }
+                        </select>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Inicio</th>
+                                <th scope="col">Termino</th>
+                                <th scope="col">Área</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of actividades; track $index) {
+                            <tr>
+                                <th scope="row">{{item.fecha}}</th>
+                                <td>{{item.inicio}}</td>
+                                <td>{{item.termino}}</td>
+                                <td>{{item.area}}</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
                 </mat-card-content>
             </mat-card>
         </article>
