@@ -1,31 +1,23 @@
-main,section,article{
-    padding: 2vh;
+section,article{
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-bottom: 2vh;
+    padding-top: 1vh;
 }
 
-mat-card{
-    padding: 2vh;
-    text-align: center;
-    mat-card-content{
-        table{
-            margin-top: 2vh;
-        }
+section{
+    gap: 2vh;
+    h3,p{
+        text-align: center;
     }
 }
 
 .filtros{
-    margin-top: 2vh;
     display: flex;
     gap: 2vh;
-    mat-form-field{
-        width: 100%;
-    }
 }
 
-#resumen-mensual{
-    margin: 2vh 0vh;
-    gap: 2vh;
 
-    mat-card{
-        padding: 0.5vh;        
-    }
+.row-cols-2 div{
+    padding: 2vh;
 }

@@ -1,57 +1,53 @@
 <main class="container-fluid">
     <section class="row">
-        <article class="col-lg">
-            <mat-card appearance="outlined">
-                <mat-card-content>
-                    <mat-card-title>Registro de horas:</mat-card-title>
-                    <mat-card-subtitle>Ingresa las horas segun los campos solicitantes</mat-card-subtitle>
-                    <form [formGroup]="actividadForm" (ngSubmit)="registrarActividad()">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Choose a date</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="fecha">
-                            <mat-hint>MM/DD/YYYY</mat-hint>
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+        <article class="col-lg card">
+            <h3>Registrar actividad</h3>
+            <p>Completa los campos requeridos para poder registrar tu actividad</p>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Pick a time</mat-label>
-                            <input matInput [matTimepicker]="timePicker" formControlName="horaInicio">
-                            <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
-                            <mat-timepicker #timePicker />
-                        </mat-form-field>
+            <form [formGroup]="actividadForm" (ngSubmit)="registrarActividad()">
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Pick a time</mat-label>
-                            <input matInput [matTimepicker]="endTimePicker" formControlName="horaTermino">
-                            <mat-timepicker-toggle matIconSuffix [for]="endTimePicker" />
-                            <mat-timepicker #endTimePicker />
-                        </mat-form-field>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Fecha de actividad</label>
+                    <input type="date" class="form-control" id="date" aria-describedby="dateHelp"
+                        formControlName="fecha">
+                    <div id="dateHelp" class="form-text">Presiona el icono de calendario para insertar la fecha o de
+                        manera manual</div>
+                </div>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Area de trabajo</mat-label>
-                            <mat-select formControlName="areaTrabajo">
-                                @for (item of areasTrabajo; track $index) {
-                                <mat-option value="{{item.id}}">{{item.nombre}}</mat-option>
-                                }
-                            </mat-select>
-                        </mat-form-field>
+                <div class="mb-3">
+                    <label for="inicio" class="form-label">Hora de inicio</label>
+                    <input type="time" class="form-control" id="inicio" aria-describedby="inicioHelp"
+                        formControlName="horaInicio">
+                    <div id="inicioHelp" class="form-text">Presiona el icono de reloj para insertar la hora de inicio o
+                        de manera manual</div>
+                </div>
 
-                        <button type="submit" matButton="filled">Registrar horas</button>
-                    </form>
+                <div class="mb-3">
+                    <label for="termino" class="form-label">Hora de termino</label>
+                    <input type="time" class="form-control" id="termino" aria-describedby="terminoHelp"
+                        formControlName="horaTermino">
+                    <div id="terminoHelp" class="form-text">Presiona el icono de reloj para insertar la hora de inicio o
+                        de manera manual</div>
+                </div>
 
-                </mat-card-content>
-            </mat-card>
+                <div class="mb-3">
+                    <label for="area" class="form-label">Área de trabajo</label>
+                    <select class="form-select" formControlName="areaTrabajo" id="area">
+                        @for (item of areasTrabajo; track $index) {
+                        <option value="{{item.id}}">{{item.nombre}}</option>
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Registrar actividad</button>
+            </form>
+
         </article>
 
-        <article class="col-lg">
-            <mat-card appearance="outlined">
-                <mat-card-content>
-                    <mat-card-title>Historial del mes:</mat-card-title>
-                    <mat-card-subtitle>Cantidad de horas registradas y aprobadas durante el mes</mat-card-subtitle>
-                    <app-grafico-dona />
-                </mat-card-content>
-            </mat-card>
+        <article class="col-lg card grafico-mensual">
+            <h3>Cantidad de horas trabajadas en este mes:</h3>
+            <app-grafico-dona />
+            <p>Este grafico representa la cantidad de horas aprobadas y trabajadas durante el mes, repartidas por las distintas áreas</p>
         </article>
 
     </section>

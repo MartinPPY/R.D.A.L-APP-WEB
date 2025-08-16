@@ -1,13 +1,20 @@
 main,section,article{
     padding: 2vh;
 }
-mat-card{
-    text-align: center;
-    mat-card-content{
-        form{
-            display: flex;
-            flex-direction: column;
-            gap: 2vh;
+
+section{
+    gap: 2vh;
+
+    article{
+        h3,p{
+            text-align: center;
         }
     }
+
+    .grafico-mensual{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
 }
