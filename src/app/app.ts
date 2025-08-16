@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ export class App implements OnInit {
   protected title = 'R-D-A-L';
 
   ngOnInit(): void {
+    initFlowbite()
   }
 
 
